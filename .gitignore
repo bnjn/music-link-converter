@@ -1,0 +1,6 @@
+.idea
+auth_tokens
+.env
+.DS_Store
+__pycache__/*
+lib/__pycache__/*
