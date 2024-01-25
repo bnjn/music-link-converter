@@ -11,7 +11,7 @@ git clone https://github.com/bnjn/music-link-converter.git
 
 ### Navigate into the project directory
 ```
-cd musiclinkconvert
+cd music-link-converter
 ```
 
 ### Install dependencies:
