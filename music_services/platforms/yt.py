@@ -12,6 +12,9 @@ def search_videos(search_term):
     url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q={search_term}&key={api_key}"
     response = requests.get(url)
     pattern = re.compile(re.escape(search_term), re.IGNORECASE)
+    if 'error' in response.json():
+        raise Exception(f'YouTube API error: {response.json()["error"]["message"]}')
+    
     for item in response.json()['items']:
         if item['id']['kind'] == 'youtube#video' and pattern.search(search_term):
             track_info = extract_song_artist(item['snippet']['title'])

@@ -86,4 +86,6 @@ def get_track_info(track_id):
     except requests.exceptions.RequestException as e:
         logging.error(e)
         raise SystemExit(e)
+    except KeyError as e:
+        return None
 

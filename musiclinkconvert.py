@@ -13,9 +13,19 @@ def cli_search():
     print(f'Found {result["track_name"]} by {result["track_artist"]}')
     print(f'Here is your {platforms[target_index]} link: {result["url"]}')
 
+  sys.exit()
+
 def cli_convert(url_info):
     source_platform = url_info['source_platform']
     source_track_info = get_source_track_info(url_info['id'], source_platform)
+
+    if source_track_info == None:
+        user_input = input('No track found. Would you like to search for a song? (Yes/No/Y/N): ').lower()
+        if user_input == 'yes' or user_input == 'y':
+          cli_search()
+        else:
+          sys.exit()
+
     possible_platforms = [platform for platform in platforms if platform != source_platform]
     search_query = f'{source_track_info["track_name"]} {source_track_info["track_artist"]}'
 
@@ -28,11 +38,12 @@ def cli_convert(url_info):
 
     print(f'Here is your {target_platform} link: {result["url"]}')
 
+    sys.exit()
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
       if (sys.argv[1] =='--search' or sys.argv[1] == '-s'):
         cli_search()
-        sys.exit()
 
       url_info = url_sanitiser(sys.argv[1])
 
@@ -42,8 +53,6 @@ if __name__ == "__main__":
           cli_search()
       else:
         cli_convert(url_info)
-        
-      sys.exit()
 
     else:
         print('--- Usage ---\n\nSupports Spotify, Tidal and Youtube URLs\n\nConvert music URL:  musiclinkconvert.py <music_url>\n\nSearch for music URL:  musiclinkconvert.py --search or musiclinkconvert.py -s')
