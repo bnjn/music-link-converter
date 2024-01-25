@@ -67,13 +67,20 @@ def search_for_track(search_string):
     }
     try:
         response = requests.get(url=search_url, headers=headers)
+
+        if response.text == '{"albums":[],"artists":[],"tracks":[],"videos":[]}':
+            logging.info(response.text)
+            print('Track not found or currently restricted by copyright :(')
+            raise SystemExit
+        
         result = json.loads(response.text)['tracks'][0]
+
         if 'resource' in result:
             result = result['resource']
             track = {
                 'track_name': result['title'],
                 'track_artist': result['artists'][0]['name'],
-                'tidal_url': f'https://tidal.com/browse/track/{result["id"]}'
+                'url': f'https://tidal.com/browse/track/{result["id"]}'
             }
             return track
         else:

@@ -63,7 +63,7 @@ def search_for_track(search_string):
         track = {
             'track_name': top_result['name'],
             'track_artist': top_result['artists'][0]['name'],
-            'spotify_url': top_result['external_urls']['spotify'],
+            'url': top_result['external_urls']['spotify'],
 
         }
         return track
